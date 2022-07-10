@@ -3,7 +3,7 @@ from ActivationFunction import *
 import numpy as np
 
 loss_func_table = {'MSE': MSE, 'cross_entropy': cross_entropy}
-activation_func_table = {'relu': relu, 'sigmoid': sigmoid, 'softmax': softmax}
+activation_func_table = {'relu': relu, 'sigmoid': sigmoid, 'softmax': softmax, 'tanh': tanh,'linear':linear}
 
 
 class OutputLayer:
@@ -26,8 +26,9 @@ class OutputLayer:
 
         return self.y
 
-    def BP(self, label):
-        delta = self.loss_func(self.y, label, diff=True) * self.activation(self.u, label, self.y, diff=True)
+    def BP(self, label, batch_size):
+        delta = self.loss_func(self.y, label, diff=True, batch_size=batch_size) * self.activation(x=self.u, label=label,
+                                                                                                  y=self.y, diff=True)
 
         self.d_w = np.dot(self.x.T, delta)
         self.d_b = np.sum(delta, axis=0)

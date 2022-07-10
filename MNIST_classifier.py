@@ -4,7 +4,6 @@ from Model import Sequential
 from BaseLayer import BaseLayer
 from OutputLayer import OutputLayer
 import matplotlib.pyplot as plt
-import copy
 
 
 def normalization(x):
@@ -38,15 +37,30 @@ test_x = np.reshape(test_x, (10000, 784))
 train_x = np.reshape(train_x, (60000, 784))
 
 # ============超參數設置============
-EPOCH = 2
+EPOCH = 10
 BATCHSIZE = 32
 LR = 0.1
 
 # ============建置模型============
 model = Sequential(epoch=EPOCH, batch_size=BATCHSIZE, learning_rate=LR)
 model.add(BaseLayer(784, 64, activation='sigmoid'))
-model.add(BaseLayer(64, 128, activation='sigmoid'))
+model.add(BaseLayer(64, 128, activation='relu'))
 model.add(OutputLayer(128, 10, activation='softmax',loss='cross_entropy'))
 
 model.fit(train_x, train_y)
 model.evaluate(test_x, test_y, batch_size=16)
+
+
+# ============測試============
+for index, x in enumerate(test_x[:9]):
+    x = x[np.newaxis, :]
+    output = model.predict(x)
+    cls = np.argmax(output)
+    label = test_y[index]
+
+    plt.subplot(331 + index)
+    plt.subplots_adjust(wspace=0.3, hspace=0.8)
+    plt.imshow(test_img[index])
+    plt.title('Pre:%d Label:%d' % (cls, test_label[index]))
+
+plt.show()

@@ -52,7 +52,6 @@ class Sequential:
                 self.BP(batch_y)
                 loss = self.output_layer.get_loss(output, batch_y) / self.batch_size
                 acc = self.calculate_acc(output, batch_y) / self.batch_size
-
                 pbar.set_description("epoch:{} - loss:{:.3} - acc:{:.3}".format(t, loss, acc))
 
     def FP(self, x):
@@ -64,7 +63,7 @@ class Sequential:
         return output
 
     def BP(self, batch_y):
-        delta = self.output_layer.BP(batch_y)
+        delta = self.output_layer.BP(batch_y, self.batch_size)
 
         for index in reversed(range(len(self.layer_list) - 1)):
             next_weight = self.layer_list[index + 1].w
