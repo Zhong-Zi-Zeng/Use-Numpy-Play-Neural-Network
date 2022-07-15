@@ -1,12 +1,15 @@
 import numpy as np
+from Optimizer import *
 from tqdm import tqdm, trange
+
+optimizer_table = {"SGD": SGD, 'Momentum': Momentum}
 
 
 class Sequential:
-    def __init__(self, epoch, batch_size, learning_rate=0.1):
+    def __init__(self, epoch, batch_size, learning_rate=0.1, optimizer='SGD'):
         self.epoch = epoch
         self.batch_size = batch_size
-        self.learning_rate = learning_rate
+        self.optimizer = optimizer_table[optimizer](learning_rate=learning_rate, batch_size=batch_size)
 
         self.layer_list = []
 
@@ -36,7 +39,7 @@ class Sequential:
             acc_list.append(acc)
             loss_list.append(loss)
 
-        print("test loss:{:.3}, test acc:{:.3}".format(np.mean(loss_list), np.mean(acc_list)))
+        print("test loss:{:.3f}, test acc:{:.3f}".format(np.mean(loss_list), np.mean(acc_list)))
 
     def fit(self, x, label):
         self.output_layer = self.layer_list[len(self.layer_list) - 1]
@@ -50,9 +53,9 @@ class Sequential:
 
                 output = self.FP(batch_x)
                 self.BP(batch_y)
-                loss = self.output_layer.get_loss(output, batch_y) / self.batch_size
+                loss = self.output_layer.get_loss(output, batch_y)
                 acc = self.calculate_acc(output, batch_y) / self.batch_size
-                pbar.set_description("epoch:{} - loss:{:.3} - acc:{:.3}".format(t, loss, acc))
+                pbar.set_description("epoch:{} - loss:{:.3f} - acc:{:.3f}".format(t, loss, acc))
 
     def FP(self, x):
         output = x
@@ -72,6 +75,4 @@ class Sequential:
         self.gradient_decent()
 
     def gradient_decent(self):
-        for layer in self.layer_list:
-            layer.w -= self.learning_rate * layer.d_w / self.batch_size
-            layer.b -= self.learning_rate * layer.d_b / self.batch_size
+        self.optimizer.gradient_decent(self.layer_list)

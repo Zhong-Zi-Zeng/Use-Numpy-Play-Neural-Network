@@ -42,14 +42,13 @@ BATCHSIZE = 32
 LR = 0.1
 
 # ============建置模型============
-model = Sequential(epoch=EPOCH, batch_size=BATCHSIZE, learning_rate=LR)
-model.add(BaseLayer(784, 64, activation='sigmoid'))
+model = Sequential(epoch=EPOCH, batch_size=BATCHSIZE, learning_rate=LR, optimizer='Momentum')
+model.add(BaseLayer(784, 64, activation='relu'))
 model.add(BaseLayer(64, 128, activation='relu'))
 model.add(OutputLayer(128, 10, activation='softmax',loss='cross_entropy'))
 
 model.fit(train_x, train_y)
 model.evaluate(test_x, test_y, batch_size=16)
-
 
 # ============測試============
 for index, x in enumerate(test_x[:9]):
