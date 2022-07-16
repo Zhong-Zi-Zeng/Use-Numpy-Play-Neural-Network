@@ -1,8 +1,7 @@
 import tensorflow as tf
 import numpy as np
 from Model import Sequential
-from BaseLayer import BaseLayer
-from OutputLayer import OutputLayer
+from NumpyNN.layer import *
 import matplotlib.pyplot as plt
 
 
@@ -42,7 +41,7 @@ BATCHSIZE = 32
 LR = 0.1
 
 # ============建置模型============
-model = Sequential(epoch=EPOCH, batch_size=BATCHSIZE, learning_rate=LR, optimizer='Momentum')
+model = Sequential(epoch=EPOCH, batch_size=BATCHSIZE, learning_rate=LR, optimizer='SGD')
 model.add(BaseLayer(784, 64, activation='relu'))
 model.add(BaseLayer(64, 128, activation='relu'))
 model.add(OutputLayer(128, 10, activation='softmax',loss='cross_entropy'))

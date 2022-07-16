@@ -9,10 +9,10 @@ class BaseLayer:
         self.activation = activation_func_table [activation]
         self.use_bias = use_bias
 
-        self.w = np.random.normal(0, 0.05, (input_shape, output_shape))
-        self.b = np.random.normal(0, 0.05, (1, output_shape))
+        self.w = np.random.normal(0,0.05,(input_shape, output_shape))
+        self.b = np.random.normal(0,0.05,(1,output_shape))
 
-    def FP(self, x):
+    def FP(self, x, **kwargs):
         self.x = x
         self.u = np.dot(self.x, self.w)
 
@@ -23,10 +23,12 @@ class BaseLayer:
 
         return self.y
 
-    def BP(self, delta, next_weight):
-        delta = np.dot(delta, next_weight.T) * self.activation(self.u, diff=True)
+    def BP(self, delta):
+        delta = delta * self.activation(self.u, diff=True)
 
         self.d_w = np.dot(self.x.T, delta)
         self.d_b = np.sum(delta, axis=0)
 
-        return delta
+        d_x = np.dot(delta, self.w.T)
+
+        return d_x

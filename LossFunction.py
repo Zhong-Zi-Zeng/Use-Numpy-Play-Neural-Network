@@ -5,7 +5,7 @@ import copy
 # ============Mean Squared Error===========
 def MSE(pre, label, diff=False, **kwargs):
     if not diff:
-        return np.mean((pre - label) ** 2) / 2
+        return np.mean(np.sum(pre - label) ** 2) / 2
     else:
         return pre - label
 
@@ -13,7 +13,7 @@ def MSE(pre, label, diff=False, **kwargs):
 # ============Cross Entropy===========
 def cross_entropy(pre, label, diff=False, **kwargs):
     if not diff:
-        return -np.sum(label * np.log(pre + 1e-7))  # avoid divide zero error
+        return -np.sum(label * np.log(pre + 1e-7), dtype=np.float64)  # avoid divide zero error
     else:
         result = copy.copy(pre)
 

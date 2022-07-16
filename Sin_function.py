@@ -1,7 +1,7 @@
 import numpy as np
 from Model import Sequential
-from BaseLayer import BaseLayer
-from OutputLayer import OutputLayer
+from layer.BaseLayer import BaseLayer
+from layer.OutputLayer import OutputLayer
 import matplotlib.pyplot as plt
 
 
