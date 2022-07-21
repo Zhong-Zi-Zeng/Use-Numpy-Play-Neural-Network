@@ -1,3 +1,3 @@
-from NumpyNN.layer.BaseLayer import BaseLayer
-from NumpyNN.layer.DropoutLayer import DropoutLayer
-from NumpyNN.layer.OutputLayer import OutputLayer
+from layer.BaseLayer import BaseLayer
+from layer.DropoutLayer import DropoutLayer
+from layer.OutputLayer import OutputLayer

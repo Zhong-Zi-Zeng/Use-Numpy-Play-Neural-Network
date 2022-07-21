@@ -6,7 +6,7 @@ activation_func_table = {'relu': relu, 'sigmoid': sigmoid, 'softmax': softmax, '
 
 class BaseLayer:
     def __init__(self, input_shape, output_shape, activation='relu', use_bias=True):
-        self.activation = activation_func_table [activation]
+        self.activation = activation_func_table[activation]
         self.use_bias = use_bias
 
         self.w = np.random.normal(0,0.05,(input_shape, output_shape))

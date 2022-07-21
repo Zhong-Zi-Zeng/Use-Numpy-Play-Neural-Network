@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 from Model import Sequential
-from NumpyNN.layer import *
+from layer import *
 import matplotlib.pyplot as plt
 
 
