@@ -1,7 +1,7 @@
 from ActivationFunction import *
 import numpy as np
 
-activation_func_table = {'relu': relu, 'sigmoid': sif hasattr(layer, 'w'):igmoid, 'softmax': softmax, 'tanh': tanh, 'linear':linear}
+activation_func_table = {'relu': relu, 'sigmoid': sigmoid, 'softmax': softmax, 'tanh': tanh, 'linear':linear}
 
 
 class BaseLayer:
