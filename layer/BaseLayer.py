@@ -1,7 +1,7 @@
 from ActivationFunction import *
 import numpy as np
 
-activation_func_table = {'relu': relu, 'sigmoid': sigmoid, 'softmax': softmax, 'tanh': tanh, 'linear':linear}
+activation_func_table = {'relu': relu, 'sigmoid': sif hasattr(layer, 'w'):igmoid, 'softmax': softmax, 'tanh': tanh, 'linear':linear}
 
 
 class BaseLayer:
@@ -11,6 +11,7 @@ class BaseLayer:
 
         self.w = np.random.normal(0,0.05,(input_shape, output_shape))
         self.b = np.random.normal(0,0.05,(1,output_shape))
+
 
     def FP(self, x, **kwargs):
         self.x = x
