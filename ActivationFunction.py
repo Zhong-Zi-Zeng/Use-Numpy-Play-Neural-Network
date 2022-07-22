@@ -22,6 +22,7 @@ def relu(x, diff=False, **kwargs):
         return x
 
 
+
 # ============Sigmoid============
 def sigmoid(x, diff=False, **kwargs):
     if not diff:

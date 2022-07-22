@@ -23,9 +23,6 @@ def im2col(images, flt_h, flt_w, stride=1, pad=0):
 
     return result
 
-# imgs = np.arange(64 * 3 * 258 * 258).reshape(64, 3, 258, 258)
-# new = im2col(imgs, 2, 2, 1, 0)
-
 
 
 

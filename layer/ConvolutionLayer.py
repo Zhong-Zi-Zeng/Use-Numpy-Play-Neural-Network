@@ -14,7 +14,7 @@ class ConvolutionLayer:
         self.activation = activation_func_table[activation]
         self.use_bias = use_bias
 
-        self.w = np.random.normal(0, 0.05, (flt_n, channel * self.output_height * self.output_width))
+        self.w = np.random.normal(0, 0.05, (flt_n, channel * flt_h * flt_w))
         self.b = np.random.normal(0, 0.05, (flt_n, 1))
 
     def FP(self, x):
@@ -29,7 +29,7 @@ class ConvolutionLayer:
         if self.use_bias:
             self.u += self.b
 
-        self.u = self.u.reshape((batch, self.output_channel, self.output_height, self.output_width)).transpose(1, 0, 2, 3)
+        self.u = self.u.T.reshape((batch, self.output_height, self.output_width, self.output_channel)).transpose(0, 3, 1, 2)
         self.y = self.activation(self.u)
 
         return self.y
@@ -40,7 +40,20 @@ class ConvolutionLayer:
 
         channel, img_h, img_w, flt_n, flt_h, flt_w, stride, pad = self.params
 
-
         delta = delta * self.activation(self.u, diff=True)
-
         delta = delta.transpose(1, 0, 2, 3).reshape(flt_n, batch * self.output_width * self.output_height)
+
+        self.d_w = np.dot(delta, self.metric.T)
+        self.d_b = np.sum(delta, axis=1, keepdims=True)
+
+
+        d_x = np.dot(self.w.T, delta)
+        d_x = col2im(d_x, (batch, channel ,img_h, img_w), flt_h, flt_w)
+
+        return d_x
+
+
+
+
+
+

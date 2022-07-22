@@ -18,6 +18,7 @@ def col2im(metric, img_shape, flt_h, flt_w, stride=1):
 metric = np.arange(8).reshape((1, 8))
 
 img_shape = (1, 2, 2, 2)
-images = col2im(metric, img_shape, 2, 2, 1)
+images = col2im(metric.T, img_shape, 2, 2, 1)
 
 print(images)
+print(images.shape)
