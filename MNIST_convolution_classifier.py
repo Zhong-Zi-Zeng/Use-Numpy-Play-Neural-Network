@@ -37,15 +37,16 @@ train_x = train_x.reshape(60000, 1, 28, 28)
 test_x = test_x.reshape(10000, 1, 28, 28)
 
 # ============超參數設置============
-EPOCH = 3
-BATCHSIZE = 16
+EPOCH = 10
+BATCHSIZE = 32
 LR = 0.1
 
 # ============建置模型============
 model = Sequential(epoch=EPOCH, batch_size=BATCHSIZE, learning_rate=LR, optimizer='SGD')
 model.add(ConvolutionLayer(channel=1, img_h=28, img_w=28, flt_n=2, flt_h=3, flt_w=3))
+model.add(MaxpoolingLayer(channel=2, img_h=26, img_w=26, pool=2))
 model.add(FlattenLayer())
-model.add(BaseLayer(1352, 64, activation='relu'))
+model.add(BaseLayer(338, 64, activation='relu'))
 model.add(BaseLayer(64, 128, activation='relu'))
 model.add(OutputLayer(128, 10, activation='softmax',loss='cross_entropy'))
 

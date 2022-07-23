@@ -9,6 +9,7 @@ def linear(x, diff=False, **kwargs):
     else:
         return 1
 
+
 # ============ReLU============
 def relu(x, diff=False, **kwargs):
     if not diff:
@@ -22,7 +23,6 @@ def relu(x, diff=False, **kwargs):
         return x
 
 
-
 # ============Sigmoid============
 def sigmoid(x, diff=False, **kwargs):
     if not diff:
@@ -31,6 +31,7 @@ def sigmoid(x, diff=False, **kwargs):
         output = sigmoid(x, False)
 
         return output * (1 - output)
+
 
 # ============tanh============
 def tanh(x, diff=False, **kwargs):

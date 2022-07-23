@@ -13,5 +13,3 @@ def col2im(metric, img_shape, flt_h, flt_w, stride=1):
             col_idx += 1
 
     return result
-
-

@@ -2,11 +2,11 @@ from tools import im2col, col2im
 from ActivationFunction import *
 import numpy as np
 
-activation_func_table = {'relu': relu, 'sigmoid': sigmoid, 'softmax': softmax, 'tanh': tanh, 'linear':linear}
+activation_func_table = {'relu': relu, 'sigmoid': sigmoid, 'softmax': softmax, 'tanh': tanh, 'linear': linear}
+
 
 class ConvolutionLayer:
     def __init__(self, channel, img_h, img_w, flt_n, flt_h, flt_w, stride=1, pad=0, activation='relu', use_bias=True):
-
         self.params = (channel, img_h, img_w, flt_n, flt_h, flt_w, stride, pad)
 
         self.output_channel = flt_n  # 輸出的圖片維度，與filter數量相同
@@ -30,11 +30,11 @@ class ConvolutionLayer:
         if self.use_bias:
             self.u += self.b
 
-        self.u = self.u.T.reshape((batch, self.output_height, self.output_width, self.output_channel)).transpose(0, 3, 1, 2)
+        self.u = self.u.T.reshape((batch, self.output_height, self.output_width, self.output_channel)).transpose(0, 3,
+                                                                                                                 1, 2)
         self.y = self.activation(self.u)
 
         return self.y
-
 
     def BP(self, delta):
         batch = delta.shape[0]
@@ -47,14 +47,7 @@ class ConvolutionLayer:
         self.d_w = np.dot(delta, self.metric.T)
         self.d_b = np.sum(delta, axis=1, keepdims=True)
 
-
         d_x = np.dot(self.w.T, delta)
-        d_x = col2im(d_x, (batch, channel ,img_h, img_w), flt_h, flt_w)
+        d_x = col2im(d_x, (batch, channel, img_h, img_w), flt_h, flt_w)
 
         return d_x
-
-
-
-
-
-
