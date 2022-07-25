@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.datasets import load_iris
 from Model import Sequential
-from NumpyNN.layer import *
+from layer import *
 
 np.random.seed(10)
 
@@ -51,13 +51,14 @@ data_x, data_y = shuffle(data_x, data_y)
 train_x, train_y, val_x, val_y = data_x[0:75], data_y[0:75], data_x[75:], data_y[75:]
 
 # ============建置模型============
-model = Sequential(epoch=EPOCH, batch_size=BATCHSIZE, learning_rate=LR, optimizer='SGD')
-model.add(BaseLayer(4, 25, activation='relu'))
+model = Sequential(epoch=EPOCH, batch_size=BATCHSIZE, learning_rate=LR, optimizer='AdaGrad')
+model.add(BaseLayer(input_shape=4, output_shape=25, activation='relu'))
 # model.add(DropoutLayer(0.5))
-model.add(BaseLayer(25, 25, activation='relu'))
+model.add(BaseLayer(25, activation='relu'))
 # model.add(DropoutLayer(0.5))
-model.add(OutputLayer(25, 3, activation='softmax',loss='cross_entropy'))
+model.add(OutputLayer(3, activation='softmax',loss='cross_entropy'))
 
+model.compile()
 model.fit(train_x, train_y, val_x, val_y, verbose=2)
 
 

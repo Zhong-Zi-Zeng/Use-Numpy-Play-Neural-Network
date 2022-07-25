@@ -7,13 +7,17 @@ activation_func_table = {'relu': relu, 'sigmoid': sigmoid, 'softmax': softmax, '
 
 
 class OutputLayer:
-    def __init__(self, input_shape, output_shape, loss, activation='relu', use_bias=True):
+    def __init__(self, output_shape, loss, activation='relu', use_bias=True):
         self.activation = activation_func_table[activation]
         self.loss_func = loss_func_table[loss]
         self.use_bias = use_bias
 
-        self.w = np.random.normal(0, 0.05, (input_shape, output_shape))
-        self.b = np.random.normal(0, 0.05, (1, output_shape))
+        self.input_shape = None
+        self.output_shape = output_shape
+
+    def set_weight_bias(self):
+        self.w = np.random.normal(0, 0.05, (self.input_shape, self.output_shape))
+        self.b = np.random.normal(0, 0.05, (1, self.output_shape))
 
     def FP(self, x, **kwargs):
             self.x = x

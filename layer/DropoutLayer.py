@@ -5,6 +5,9 @@ class DropoutLayer:
     def __init__(self, drop_ratio):
         self.drop_ratio = drop_ratio
 
+    def set_weight_bias(self):
+        pass
+
     def FP(self, x, is_train=False):
         self.rand = np.where(np.random.random(x.shape) > self.drop_ratio, 1, 0)
 

@@ -107,6 +107,14 @@ class Sequential:
         plt.legend()
         plt.show()
 
+    def compile(self):
+        for idx, layer in enumerate(self.layer_list):
+            layer.set_weight_bias()
+            # print(idx, layer.input_shape)
+            # print(idx, layer.output_shape)
+            if idx + 1 < len(self.layer_list):
+                self.layer_list[idx + 1].input_shape = layer.output_shape
+
     def FP(self, x):
         output = x
 

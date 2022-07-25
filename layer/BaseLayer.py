@@ -1,17 +1,20 @@
 from ActivationFunction import *
 import numpy as np
 
-activation_func_table = {'relu': relu, 'sigmoid': sigmoid, 'softmax': softmax, 'tanh': tanh, 'linear':linear}
+activation_func_table = {'relu': relu, 'sigmoid': sigmoid, 'softmax': softmax, 'tanh': tanh, 'linear': linear}
 
 
 class BaseLayer:
-    def __init__(self, input_shape, output_shape, activation='relu', use_bias=True):
+    def __init__(self, output_shape, input_shape=None, activation='relu', use_bias=True):
         self.activation = activation_func_table[activation]
         self.use_bias = use_bias
 
-        self.w = np.random.normal(0,0.05,(input_shape, output_shape))
-        self.b = np.random.normal(0,0.05,(1,output_shape))
+        self.input_shape = input_shape
+        self.output_shape = output_shape
 
+    def set_weight_bias(self):
+        self.w = np.random.normal(0, 0.05, (self.input_shape, self.output_shape))
+        self.b = np.random.normal(0, 0.05, (1, self.output_shape))
 
     def FP(self, x, **kwargs):
         self.x = x

@@ -3,18 +3,26 @@ import numpy as np
 
 
 class MaxpoolingLayer:
-    def __init__(self, channel, img_h, img_w, pool):
-        self.params = (channel, img_h, img_w, pool)
+    def __init__(self, pool, input_shape=None):
+        self.params = (pool)
+        self.input_shape = input_shape
+        self.output_shape = None
+
+    def set_weight_bias(self):
+        channel, img_h, img_w, = self.input_shape
+        pool = self.params
 
         self.output_channel = channel
         self.output_height = img_h // pool if img_h % pool == 0 else img_h // pool + 1
         self.output_width = img_w // pool if img_w % pool == 0 else img_w // pool + 1
+        self.output_shape = (self.output_channel, self.output_height, self.output_width)
 
     def FP(self, x, **kwargs):
         batch = x.shape[0]
+        pool = self.params
 
-        channel, img_h, img_w, pool = self.params
         x = im2col(x, pool, pool, stride=pool)
+        # print(x.shape)
         x = x.T.reshape((batch * self.output_height * self.output_width * self.output_channel, pool ** 2))
 
         self.y = np.max(x, axis=1)
@@ -25,7 +33,9 @@ class MaxpoolingLayer:
 
     def BP(self, delta):
         batch = delta.shape[0]
-        channel, img_h, img_w, pool = self.params
+
+        channel, img_h, img_w = self.input_shape
+        pool = self.params
 
         delta = delta.transpose(0, 2, 3, 1)
         delta = delta.reshape(-1)

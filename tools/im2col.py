@@ -1,11 +1,18 @@
 import numpy as np
 
+
 def im2col(images, flt_h, flt_w, stride=1, pad=0):
     images_pad = np.pad(images, [(0, 0), (0, 0), (pad, pad), (pad, pad)], "constant")
     batch, channel, img_height, img_width = images_pad.shape
 
     out_h = (img_height - flt_h + 2 * pad) // stride + 1
     out_w = (img_width - flt_w + 2 * pad) // stride + 1
+
+    if (img_height - flt_h + 2 * pad) % stride != 0:
+        out_h += 1
+
+    if (img_width - flt_w + 2 * pad) % stride != 0:
+        out_w += 1
 
     metric_height = channel * flt_h * flt_w * batch
     metric_width = out_h * out_w
@@ -22,7 +29,3 @@ def im2col(images, flt_h, flt_w, stride=1, pad=0):
     result = np.concatenate(result, axis=1)
 
     return result
-
-
-
-
